@@ -34,3 +34,32 @@ Read these before writing ANY Next.js code in this repo:
 - `generateObject` is imported from `ai`
 - `google` provider is imported from `@ai-sdk/google`
 - Model string: `google('gemini-2.5-flash')`
+
+## shadcn/ui Setup
+
+shadcn/ui is initialized in this project. `components.json` is at root. Core peer deps (`class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react`) are installed.
+
+**When you need a shadcn component**, add it with:
+```bash
+npx shadcn@latest add <component> --yes
+```
+
+**AI Elements to use for Codebase Crypt UI:**
+
+| Our component | Use this shadcn/AI element |
+|---|---|
+| `ExorciseModal` | `Artifact` from shadcn AI Elements — has title, copy, download, scrolling content built in |
+| `SummonLoader` | `shimmer` CSS utility from shadcn (`className="shimmer"`) + animated progress text |
+| `InspectorDrawer` | shadcn `Sheet` (slide-in drawer) + `Card` for metric rows |
+| Haunting Score badge | shadcn `Badge` |
+| Filter pills | shadcn `Button` with `variant="outline"` / `variant="default"` toggle |
+| Tabs in ExorciseModal | shadcn `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent` |
+| Error screen | shadcn `Card` with `CardHeader`, `CardContent` |
+
+**Artifact component** (for ExorciseModal): copy from https://ui.shadcn.com/docs/ai-elements or install via:
+```bash
+npx shadcn@latest add artifact --yes
+```
+Provides `Artifact`, `ArtifactHeader`, `ArtifactTitle`, `ArtifactDescription`, `ArtifactActions`, `ArtifactAction`, `ArtifactContent`, `ArtifactClose`.
+
+**shimmer** is a Tailwind CSS utility — use `className="shimmer"` on any text element for the streaming/loading shimmer effect. It ships with shadcn's tailwind.css. Add `@import "tailwindcss/utilities"` if not already present.
