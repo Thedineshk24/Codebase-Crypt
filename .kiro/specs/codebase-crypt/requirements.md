@@ -35,7 +35,7 @@ Codebase Crypt turns any public GitHub repository into an interactive gothic hau
 
 ## Implementation Decisions
 
-- **Stack**: Next.js 14 App Router, TypeScript, deployed on Vercel. All backend logic lives in Next.js API routes — no separate server.
+- **Stack**: Next.js App Router (v16+), TypeScript, deployed on Vercel. All backend logic lives in Next.js API routes — no separate server.
 - **GitHub data fetching**:
   - Initial summon: 1 Git Trees API call (file paths + sizes) + 2–3 batched GitHub GraphQL requests using field aliases to fetch `history(first: 20, path: "...")` for all files in chunks of ~40–50 at a time. Total: 3–4 API calls.
   - File bodies: fetched lazily from `raw.githubusercontent.com` on node click (does not count against GitHub REST rate limits).

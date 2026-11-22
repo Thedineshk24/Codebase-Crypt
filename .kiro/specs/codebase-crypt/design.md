@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-Single Next.js 14 App Router application deployed on Vercel. No separate backend service. All GitHub analysis runs in Next.js API routes (serverless functions). The scoring engine is a pure TypeScript module with zero I/O.
+Single Next.js App Router (v16+) application deployed on Vercel. No separate backend service. All GitHub analysis runs in Next.js API routes (serverless functions). The scoring engine is a pure TypeScript module with zero I/O.
 
 ```
 /

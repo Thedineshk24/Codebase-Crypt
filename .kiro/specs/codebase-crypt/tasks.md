@@ -3,15 +3,18 @@
 ## Task 1: Project scaffold + scoring engine + PBT suite
 **Blocked by:** None (can start immediately)
 
-Set up the Next.js 14 App Router project with TypeScript, Tailwind CSS, React Flow, Vitest, and fast-check. Implement `src/lib/scoring.ts` as a pure module (`scoreFile`, `classifyFile`, entrypoint regex). Write the full Vitest + fast-check test suite covering boundedness, maximum, entrypoint immunity, monotonicity, and exhaustiveness. Add `.kiro/hooks/on-save-scoring.json` to auto-run `npm test` on saves to `scoring.ts`. All tests must pass.
+Set up the Next.js App Router project (latest, currently v16) with TypeScript, Tailwind CSS, React Flow (@xyflow/react), Vitest, and fast-check. Implement `src/lib/scoring.ts` as a pure module (`scoreFile`, `classifyFile`, entrypoint regex). Write the full Vitest + fast-check test suite covering boundedness, maximum, entrypoint immunity, monotonicity, and exhaustiveness. All tests must pass.
 
-- [ ] `npx create-next-app` with TypeScript + Tailwind, install `reactflow`, `vitest`, `fast-check`, `@ai-sdk/google`, `ai`, `jszip`
-- [ ] `src/lib/scoring.ts` exports `scoreFile()`, `classifyFile()`, `ENTRYPOINT_REGEX`, `HauntingGrade` computation
+- [ ] Scaffold with `npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --no-git` (answer all prompts with defaults)
+- [ ] Install runtime deps: `npm install @xyflow/react ai @ai-sdk/google jszip zod`
+- [ ] Install dev deps: `npm install -D vitest @vitest/coverage-v8 fast-check @vitejs/plugin-react`
+- [ ] Create `vitest.config.ts` at root (do NOT put vitest config inside next.config.ts)
 - [ ] `src/types/index.ts` defines `FileMetrics`, `CryptNode`, `CryptData`, `HauntingType`, `HauntingGrade`
-- [ ] Vitest unit tests: all classification branches, edge cases
+- [ ] `src/lib/scoring.ts` exports `scoreFile()`, `classifyFile()`, `ENTRYPOINT_REGEX`, `computeHauntingGrade()`
+- [ ] Vitest unit tests in `src/lib/scoring.test.ts`: all classification branches, edge cases
 - [ ] fast-check property tests: boundedness, maximum, entrypoint immunity, monotonicity, exhaustiveness
-- [ ] `.kiro/hooks/on-save-scoring.json` configured and working
 - [ ] `npm test` passes with 0 failures
+- [ ] `.env.example` documents `GITHUB_TOKEN` and `GEMINI_API_KEY`
 
 ## Task 2: GitHub analysis API route
 **Blocked by:** Task 1
@@ -23,7 +26,7 @@ Implement `src/app/api/analyze/route.ts`. Accepts `GET ?owner=&repo=`. Fetches t
 - [ ] GraphQL batching (40–50 files per request, field aliases) when `GITHUB_TOKEN` present
 - [ ] REST fallback path when no token
 - [ ] `scoreFile` + `classifyFile` applied to all nodes
-- [ ] `HauntingGrade` computed from haunted node percentage
+- [ ] `computeHauntingGrade` applied to full node set
 - [ ] Response cached with correct `Cache-Control` header
 - [ ] 404/403 error responses with structured JSON error shape
 - [ ] `src/lib/github.ts` extracted module for all GitHub API logic
@@ -31,12 +34,12 @@ Implement `src/app/api/analyze/route.ts`. Accepts `GET ?owner=&repo=`. Fetches t
 ## Task 3: Lazy file body API route + fixture generation
 **Blocked by:** Task 2
 
-Implement `src/app/api/file/route.ts` for lazy per-file fetching. Fetches `raw.githubusercontent.com` for the file body, parses LOC, TODO/FIXME count, and import statements. Run the live analyzer against `expressjs/express`, `fastapi/fastapi`, and `facebook/react` and commit the results as `fixtures/expressjs-express.json`, `fixtures/fastapi-fastapi.json`, `fixtures/facebook-react.json`.
+Implement `src/app/api/file/route.ts` for lazy per-file fetching. Fetches `raw.githubusercontent.com` for the file body, parses LOC, TODO/FIXME count, and import statements. Run the live analyzer against `expressjs/express`, `fastapi/fastapi`, and `facebook/react` and commit the results as fixture JSON files.
 
-- [ ] `GET /api/file?owner=&repo=&path=` fetches raw file body
+- [ ] `GET /api/file?owner=&repo=&path=` fetches raw file body from `raw.githubusercontent.com` (no rate-limit cost)
 - [ ] Returns `{ loc, todoCount, todoLines, imports }`
 - [ ] `src/lib/fixtures.ts` loads pre-baked JSON by `owner/repo` key
-- [ ] All three fixture files generated from real analyzer runs and committed
+- [ ] All three fixture files generated from real analyzer runs and committed under `fixtures/`
 - [ ] Every `CryptNode` in fixtures has a valid, resolvable GitHub file URL
 
 ## Task 4: Landing page
@@ -54,8 +57,9 @@ Build `src/app/page.tsx`. Dark gothic hero with GitHub URL input + Summon Crypt 
 ## Task 5: Crypt Map (React Flow canvas + Chamber nodes)
 **Blocked by:** Task 3
 
-Build `src/components/CryptMap.tsx`. React Flow canvas with pan/zoom/minimap. Chamber parent nodes per top-level directory using the deterministic grid layout algorithm. Custom node components per `HauntingType` with correct glow colors. Edges from directory hierarchy.
+Build `src/components/CryptMap.tsx` using `@xyflow/react` (v13+). React Flow canvas with pan/zoom/minimap. Chamber parent nodes per top-level directory using the deterministic grid layout algorithm. Custom node components per `HauntingType` with correct glow colors. Edges from directory hierarchy.
 
+- [ ] Import from `@xyflow/react`, not the old `reactflow` package
 - [ ] Chamber (parent) node component styled as gothic stone container with directory label
 - [ ] File node components: Ghost (cyan glow + float animation), Cursed Relic (orange pulse), Tombstone (amber badge), Healthy (violet)
 - [ ] Deterministic grid layout: `chamberWidth`, `chamberHeight` computed from child count
@@ -94,10 +98,11 @@ Build `src/components/InspectorDrawer.tsx` and `src/components/ExorciseModal.tsx
 
 Implement `src/app/api/exorcise/route.ts`. Accepts `POST` with `{ owner, repo, path, fileContent, metrics }`. Calls Gemini 2.5 Flash via Vercel AI SDK `generateObject` with Zod schema. 8s timeout. Falls back to deterministic template on failure.
 
-- [ ] Vercel AI SDK `generateObject` with `@google/genai` provider
-- [ ] Zod schema: `{ requirements: z.string(), design: z.string(), tasks: z.string() }`
-- [ ] Prompt includes file path, content (truncated to 4000 tokens if needed), and all metrics
-- [ ] 8-second timeout enforced
+- [ ] Use `@ai-sdk/google` (v4+) and `ai` (v7+) — import `generateObject` from `ai`, `google` from `@ai-sdk/google`
+- [ ] Zod schema: `z.object({ requirements: z.string(), design: z.string(), tasks: z.string() })`
+- [ ] Model: `google('gemini-2.5-flash')`
+- [ ] Prompt includes file path, content (truncated to 4000 chars if needed), and all metrics
+- [ ] 8-second timeout enforced via `AbortSignal.timeout(8000)`
 - [ ] Deterministic fallback template produces valid EARS-format requirements.md, design.md, tasks.md
 - [ ] `GEMINI_API_KEY` env var documented in `.env.example`
 
