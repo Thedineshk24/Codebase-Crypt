@@ -1,0 +1,528 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Scaffold Next.js: run `npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git` with defaults": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344366508
+      },
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344385612
+      }
+    ],
+    "1.2 Install runtime deps: `npm install @xyflow/react ai @ai-sdk/google jszip zod`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344366613
+      }
+    ],
+    "1.3 Install dev deps: `npm install -D vitest @vitest/coverage-v8 fast-check @vitejs/plugin-react`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344366705
+      }
+    ],
+    "1.4 Create `vitest.config.ts` at root (separate from next.config.ts); add `\"test\": \"vitest\"` to package.json scripts": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344366879
+      }
+    ],
+    "1.5 Write `src/types/index.ts` — exports `FileMetrics`, `CryptNode`, `CryptData`, `HauntingType`, `HauntingGrade`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344366974
+      }
+    ],
+    "1.6 Write `src/lib/scoring.ts` — exports `scoreFile()`, `classifyFile()`, `ENTRYPOINT_REGEX`, `computeHauntingGrade()`; formula: `score = round(min(100, max(churnNorm, ageNorm) * 65 + sizeNorm * 35 + min(todoCount * 4, 20)))`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344367087
+      }
+    ],
+    "1.7 Write `src/lib/scoring.test.ts` — Vitest unit tests covering all four classification branches and edge cases": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344367210
+      }
+    ],
+    "1.8 Write fast-check property tests in `src/lib/scoring.test.ts`: boundedness [0,100], maximum (all-1 inputs → 100), entrypoint immunity (entrypoints never Ghost), monotonicity (increasing any input never decreases score), exhaustiveness (exactly one label per input)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344367419
+      }
+    ],
+    "1.9 Run `npm test` and confirm 0 failures": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344367501
+      }
+    ],
+    "1.10 Create `.env.example` documenting `GITHUB_TOKEN` and `GEMINI_API_KEY`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344367586
+      }
+    ],
+    "2.1 Write `src/lib/github.ts` — `fetchFileTree(owner, repo)` via Git Trees API, filters to ≤120 source files, returns `{ path, sizeBytes }[]`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344367669
+      }
+    ],
+    "2.2 Add `fetchCommitHistory(owner, repo, paths[])` to `github.ts` — batched GraphQL aliases (40–50 files/request) when `GITHUB_TOKEN` present; REST fallback otherwise": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344367759
+      }
+    ],
+    "2.3 Implement `GET /api/analyze?owner=&repo=` route — calls `fetchFileTree` + `fetchCommitHistory`, normalizes metrics, runs `scoreFile` + `classifyFile` on all nodes": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344367917
+      }
+    ],
+    "2.4 Add `computeHauntingGrade` call and include in response": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368002
+      }
+    ],
+    "2.5 Return `Cache-Control: public, s-maxage=900, stale-while-revalidate=300` header": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368083
+      }
+    ],
+    "2.6 Return structured JSON errors for 404 (not found/private) and 403 (rate limited)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368166
+      }
+    ],
+    "3.1 Implement `GET /api/file?owner=&repo=&path=` — fetches `raw.githubusercontent.com/{owner}/{repo}/HEAD/{path}`, returns `{ loc, todoCount, todoLines, imports }`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368243
+      }
+    ],
+    "3.2 Write `src/lib/fixtures.ts` — loads pre-baked JSON from `fixtures/` by `owner/repo` key": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368393
+      }
+    ],
+    "3.3 Generate `fixtures/expressjs-express.json` from a real analyzer run": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368477
+      }
+    ],
+    "3.4 Generate `fixtures/fastapi-fastapi.json` from a real analyzer run": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368557
+      }
+    ],
+    "3.5 Generate `fixtures/facebook-react.json` from a real analyzer run": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368638
+      }
+    ],
+    "3.6 Commit all three fixture files; verify every `CryptNode` has a valid GitHub file URL": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368762
+      }
+    ],
+    "4.1 Build gothic hero layout with `#0B0A10` bg, `#F4F1EA` text, JetBrains Mono for paths": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368846
+      }
+    ],
+    "4.2 Add GitHub URL input with format validation (enable Summon button only on valid URL)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344368941
+      }
+    ],
+    "4.3 Add three demo crypt cards loaded from `fixtures.ts` showing repo name, language badge, Haunting Grade, node count": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369023
+      }
+    ],
+    "4.4 Wire navigation to `/crypt/[owner]/[repo]` on submit and card click": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369102
+      }
+    ],
+    "4.5 Ensure keyboard accessibility (Enter submits, cards focusable) and WCAG AA contrast (≥4.5:1)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369188
+      }
+    ],
+    "4.6 Verify responsive layout at mobile and 1080p": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369264
+      }
+    ],
+    "5.1 Set up `<ReactFlow>` canvas with pan, zoom, and `<MiniMap>` — import from `@xyflow/react`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369357
+      }
+    ],
+    "5.2 Build Chamber parent node component — gothic stone container styled with `#151320` bg, directory name label": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369496
+      }
+    ],
+    "5.3 Build Ghost file node — `#00E5FF` cyan glow + CSS float keyframe animation": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369575
+      }
+    ],
+    "5.4 Build Cursed Relic file node — `#FF6B2B` orange pulse animation": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369659
+      }
+    ],
+    "5.5 Build Tombstone file node — `#F59E0B` amber badge": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369741
+      }
+    ],
+    "5.6 Build Healthy file node — `#8B5CF6` violet border": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369827
+      }
+    ],
+    "5.7 Implement deterministic grid layout: `cols = max(2, ceil(sqrt(n)))`, `chamberWidth = cols * (NODE_W + GAP) + PADDING*2`, chambers tiled left-to-right wrapping at 2400px": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344369913
+      }
+    ],
+    "5.8 Verify nodes never overlap within a chamber": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370010
+      }
+    ],
+    "6.1 Add filter pills: All, Ghosts, Cursed Relics, Tombstones — with live entity counts": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370135
+      }
+    ],
+    "6.2 Implement real-time filename search that dims non-matching nodes (<16ms per keystroke)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370260
+      }
+    ],
+    "6.3 Show overall Haunting Grade badge with gothic label and correct color": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370427
+      }
+    ],
+    "6.4 Show truncation badge when `CryptData.truncated === true`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370522
+      }
+    ],
+    "7.1 Build `InspectorDrawer` — opens on node click, closes on outside click/Escape": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370604
+      }
+    ],
+    "7.2 Trigger `GET /api/file` on drawer open; display LOC, TODO lines, inbound refs": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370693
+      }
+    ],
+    "7.3 Add `todo_bonus` to displayed score after lazy fetch": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370784
+      }
+    ],
+    "7.4 Add GitHub file link (opens new tab)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370862
+      }
+    ],
+    "7.5 Add Exorcise button — sends `POST /api/exorcise` with file content + metrics": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344370953
+      }
+    ],
+    "7.6 Build `ExorciseModal` — summoning loader, then three tabs (requirements.md, design.md, tasks.md)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371039
+      }
+    ],
+    "7.7 Add copy-to-clipboard button per tab": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371172
+      }
+    ],
+    "7.8 Add Download ZIP button — `exorcise-<slug>.zip` with correct folder structure via JSZip": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371260
+      }
+    ],
+    "7.9 Render deterministic fallback spec if LLM call fails": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371345
+      }
+    ],
+    "8.1 Implement `POST /api/exorcise` — accepts `{ owner, repo, path, fileContent, metrics }`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371428
+      }
+    ],
+    "8.2 Call `generateObject` from `ai` with `google('gemini-2.5-flash')` from `@ai-sdk/google`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371522
+      }
+    ],
+    "8.3 Zod schema: `z.object({ requirements: z.string(), design: z.string(), tasks: z.string() })`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371616
+      }
+    ],
+    "8.4 Truncate `fileContent` to 4000 chars in prompt if needed": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371703
+      }
+    ],
+    "8.5 Enforce 8s timeout via `AbortSignal.timeout(8000)`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371802
+      }
+    ],
+    "8.6 Return deterministic EARS-format fallback template on timeout or error": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344371969
+      }
+    ],
+    "9.1 Build `SummonLoader` — cycles through: \"Unearthing file tree...\", \"Reading commit spirits...\", \"Calculating curses...\", \"Mapping the crypt...\"": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372058
+      }
+    ],
+    "9.2 Build `ErrorCard` — gothic-themed message per error type (not found, private, rate limited)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372140
+      }
+    ],
+    "9.3 Show all three demo crypt cards on error screen with one-click navigation": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372235
+      }
+    ],
+    "10.1 Check fixtures by `owner/repo` — render CryptMap immediately with zero API calls for demo repos": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372320
+      }
+    ],
+    "10.2 For live repos, show `SummonLoader` while `GET /api/analyze` runs": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372406
+      }
+    ],
+    "10.3 Pass `CryptData` to `CryptMap` and `HUD`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372496
+      }
+    ],
+    "10.4 Wire node click to open `InspectorDrawer` with correct node data": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372584
+      }
+    ],
+    "10.5 Render `ErrorCard` on API error (404, 403, timeout)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372668
+      }
+    ],
+    "10.6 Set page `<title>` to `{owner}/{repo} — Codebase Crypt`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372824
+      }
+    ],
+    "10.7 Add `<link rel=\"canonical\">` for shareable URL": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344372915
+      }
+    ],
+    "11.1 Run `npm test` — confirm 100% pass (unit + PBT)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344373024
+      }
+    ],
+    "11.2 Verify all three demo crypts load in <500ms (DevTools Network tab)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344373155
+      }
+    ],
+    "11.3 Verify live repo analysis (expressjs/express) completes in <10s": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344373280
+      }
+    ],
+    "11.4 Verify Exorcise spec generates in <8s with file-specific content": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344373371
+      }
+    ],
+    "11.5 Verify WCAG AA contrast on landing page and Inspector Drawer": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344373465
+      }
+    ],
+    "11.6 Verify `/crypt/expressjs/express` shareable URL works for a cold visitor (CDN cache hit)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344373557
+      }
+    ],
+    "11.7 Confirm `.kiro/` is tracked in Git and not in `.gitignore`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344373643
+      }
+    ],
+    "11.8 Confirm `.env.example` documents `GITHUB_TOKEN` and `GEMINI_API_KEY`": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344373734
+      }
+    ],
+    "11.9 Confirm Vercel deployment URL is live and all three demo flows work end-to-end": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795344373821
+      }
+    ]
+  }
+}
