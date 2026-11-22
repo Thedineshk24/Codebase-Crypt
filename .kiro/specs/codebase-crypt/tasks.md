@@ -21,12 +21,12 @@ Implement src/app/api/analyze/route.ts and src/lib/github.ts.
 
 **Depends on:** Task 1
 
-- [ ] 2.1: Write src/lib/github.ts with fetchFileTree (Git Trees API, filters to 120 source files)
-- [ ] 2.2: Add fetchCommitHistory to github.ts with batched GraphQL aliases when GITHUB_TOKEN present, REST fallback otherwise
-- [ ] 2.3: Implement GET /api/analyze?owner=&repo= route calling fetchFileTree + fetchCommitHistory, normalizing metrics, scoring all nodes
-- [ ] 2.4: Add computeHauntingGrade call and include hauntingGrade in response
-- [ ] 2.5: Add export const revalidate = 900 and Cache-Control header to analyze route
-- [ ] 2.6: Return structured JSON errors for 404 and 403 responses from GitHub
+- [x] 2.1: Write src/lib/github.ts with fetchFileTree (Git Trees API, filters to 120 source files)
+- [x] 2.2: Add fetchCommitHistory to github.ts with batched GraphQL aliases when GITHUB_TOKEN present, REST fallback otherwise
+- [x] 2.3: Implement GET /api/analyze?owner=&repo= route calling fetchFileTree + fetchCommitHistory, normalizing metrics, scoring all nodes
+- [x] 2.4: Add computeHauntingGrade call and include hauntingGrade in response
+- [x] 2.5: Add export const revalidate = 900 and Cache-Control header to analyze route
+- [x] 2.6: Return structured JSON errors for 404 and 403 responses from GitHub
 
 ## Task 3: Lazy file body API route and fixture generation
 
@@ -102,12 +102,12 @@ Implement src/app/api/exorcise/route.ts.
 
 **Depends on:** Task 1
 
-- [ ] 8.1: Implement POST /api/exorcise accepting owner, repo, path, fileContent, metrics
+- [x] 8.1: Implement POST /api/exorcise accepting owner, repo, path, fileContent, metrics
 - [ ] 8.2: Call generateObject from ai with google('gemini-2.5-flash') from @ai-sdk/google
-- [ ] 8.3: Define Zod schema with requirements, design, and tasks string fields
-- [ ] 8.4: Truncate fileContent to 4000 chars in prompt if needed
-- [ ] 8.5: Enforce 8s timeout via AbortSignal.timeout(8000)
-- [ ] 8.6: Return deterministic EARS-format fallback template on timeout or error
+- [x] 8.3: Define Zod schema with requirements, design, and tasks string fields
+- [x] 8.4: Truncate fileContent to 4000 chars in prompt if needed
+- [x] 8.5: Enforce 8s timeout via AbortSignal.timeout(8000)
+- [x] 8.6: Return deterministic EARS-format fallback template on timeout or error
 
 ## Task 9: Summoning loader and error card
 

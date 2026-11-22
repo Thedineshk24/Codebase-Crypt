@@ -28,6 +28,11 @@
         "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
         "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
         "timestamp": 1795344823709
+      },
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345262091
       }
     ],
     "1.3 Install dev deps: `npm install -D vitest @vitest/coverage-v8 fast-check @vitejs/plugin-react`": [
@@ -35,6 +40,11 @@
         "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
         "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
         "timestamp": 1795344366705
+      },
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345268615
       }
     ],
     "1.4 Create `vitest.config.ts` at root (separate from next.config.ts); add `\"test\": \"vitest\"` to package.json scripts": [
@@ -532,6 +542,529 @@
         "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
         "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
         "timestamp": 1795344373821
+      }
+    ],
+    "2.1: Write src/lib/github.ts with fetchFileTree (Git Trees API, filters to 120 source files)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345362335
+      },
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345375769
+      },
+      {
+        "executionId": "eea3bb35-84af-4ee5-8ef4-684437c607fd",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346048193
+      },
+      {
+        "executionId": "eea3bb35-84af-4ee5-8ef4-684437c607fd",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346267339
+      }
+    ],
+    "2.2: Add fetchCommitHistory to github.ts with batched GraphQL aliases when GITHUB_TOKEN present, REST fallback otherwise": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345362470
+      },
+      {
+        "executionId": "eea3bb35-84af-4ee5-8ef4-684437c607fd",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346273372
+      }
+    ],
+    "2.3: Implement GET /api/analyze?owner=&repo= route calling fetchFileTree + fetchCommitHistory, normalizing metrics, scoring all nodes": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345362560
+      },
+      {
+        "executionId": "eea3bb35-84af-4ee5-8ef4-684437c607fd",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346279349
+      }
+    ],
+    "2.4: Add computeHauntingGrade call and include hauntingGrade in response": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345362656
+      },
+      {
+        "executionId": "eea3bb35-84af-4ee5-8ef4-684437c607fd",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346285198
+      }
+    ],
+    "2.5: Add export const revalidate = 900 and Cache-Control header to analyze route": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345362752
+      },
+      {
+        "executionId": "eea3bb35-84af-4ee5-8ef4-684437c607fd",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346291181
+      }
+    ],
+    "2.6: Return structured JSON errors for 404 and 403 responses from GitHub": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345362863
+      },
+      {
+        "executionId": "eea3bb35-84af-4ee5-8ef4-684437c607fd",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346297487
+      }
+    ],
+    "3.1: Implement GET /api/file?owner=&repo=&path= fetching raw.githubusercontent.com, returning loc/todoCount/todoLines/imports": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345362955
+      },
+      {
+        "executionId": "90625186-f4ab-4705-926e-4ad83c454d80",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346557030
+      }
+    ],
+    "3.2: Write src/lib/fixtures.ts loading pre-baked JSON from fixtures/ by owner/repo key": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363035
+      }
+    ],
+    "3.3: Generate fixtures/expressjs-express.json from real analyzer run": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363130
+      }
+    ],
+    "3.4: Generate fixtures/fastapi-fastapi.json from real analyzer run": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363234
+      }
+    ],
+    "3.5: Generate fixtures/facebook-react.json from real analyzer run": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363325
+      }
+    ],
+    "3.6: Commit all three fixture files and verify every CryptNode has a valid GitHub file URL": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363439
+      }
+    ],
+    "4.1: Build gothic hero layout with obsidian bg (#0B0A10), bone-white text (#F4F1EA), JetBrains Mono for paths": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363527
+      }
+    ],
+    "4.2: Add GitHub URL input with format validation enabling Summon button only on valid URL": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363616
+      }
+    ],
+    "4.3: Add three demo crypt cards loaded from fixtures.ts showing repo name, language badge, Haunting Grade, node count": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363706
+      }
+    ],
+    "4.4: Wire navigation to /crypt/[owner]/[repo] on submit and card click": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363804
+      }
+    ],
+    "4.5: Ensure keyboard accessibility (Enter submits, cards focusable) and WCAG AA contrast": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345363901
+      }
+    ],
+    "4.6: Verify responsive layout at mobile and 1080p": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364013
+      }
+    ],
+    "5.1: Set up ReactFlow canvas with pan, zoom, and MiniMap imported from @xyflow/react": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364098
+      }
+    ],
+    "5.2: Build Chamber parent node component as gothic stone container with #151320 bg and directory label": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364191
+      }
+    ],
+    "5.3: Build Ghost file node with #00E5FF cyan glow and CSS float keyframe animation": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364282
+      }
+    ],
+    "5.4: Build Cursed Relic file node with #FF6B2B orange pulse animation": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364373
+      }
+    ],
+    "5.5: Build Tombstone file node with #F59E0B amber badge": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364454
+      }
+    ],
+    "5.6: Build Healthy file node with #8B5CF6 violet border": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364536
+      }
+    ],
+    "5.7: Implement deterministic grid layout with cols = max(2, ceil(sqrt(n))), chambers tiled left-to-right wrapping at 2400px": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364634
+      }
+    ],
+    "5.8: Verify nodes never overlap within a chamber": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364725
+      }
+    ],
+    "6.1: Add filter pills for All, Ghosts, Cursed Relics, Tombstones with live entity counts": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364821
+      }
+    ],
+    "6.2: Implement real-time filename search dimming non-matching nodes under 16ms per keystroke": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364911
+      }
+    ],
+    "6.3: Show overall Haunting Grade badge with gothic label and correct color": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345364998
+      }
+    ],
+    "6.4: Show truncation badge when CryptData.truncated is true": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345365118
+      }
+    ],
+    "7.1: Build InspectorDrawer opening on node click and closing on outside click or Escape": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345365205
+      }
+    ],
+    "7.2: Trigger GET /api/file on drawer open and display LOC, TODO lines, inbound refs": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345365294
+      }
+    ],
+    "7.3: Add todo_bonus to displayed score after lazy fetch": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345365382
+      }
+    ],
+    "7.4: Add GitHub file link opening in new tab": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345365475
+      }
+    ],
+    "7.5: Add Exorcise button sending POST /api/exorcise with file content and metrics": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345365589
+      }
+    ],
+    "7.6: Build ExorciseModal with summoning loader then three tabs for requirements.md, design.md, tasks.md": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345365701
+      }
+    ],
+    "7.7: Add copy-to-clipboard button per tab": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345365797
+      }
+    ],
+    "7.8: Add Download ZIP button producing exorcise-slug.zip with correct folder structure via JSZip": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345365892
+      }
+    ],
+    "7.9: Render deterministic fallback spec if LLM call fails": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366007
+      }
+    ],
+    "8.1: Implement POST /api/exorcise accepting owner, repo, path, fileContent, metrics": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366088
+      },
+      {
+        "executionId": "eea3bb35-84af-4ee5-8ef4-684437c607fd",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346303488
+      }
+    ],
+    "8.2: Call generateObject from ai with google('gemini-2.5-flash') from @ai-sdk/google": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366182
+      },
+      {
+        "executionId": "eea3bb35-84af-4ee5-8ef4-684437c607fd",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346309535
+      }
+    ],
+    "8.3: Define Zod schema with requirements, design, and tasks string fields": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366275
+      },
+      {
+        "executionId": "90625186-f4ab-4705-926e-4ad83c454d80",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346525276
+      }
+    ],
+    "8.4: Truncate fileContent to 4000 chars in prompt if needed": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366381
+      },
+      {
+        "executionId": "90625186-f4ab-4705-926e-4ad83c454d80",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346531217
+      }
+    ],
+    "8.5: Enforce 8s timeout via AbortSignal.timeout(8000)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366481
+      },
+      {
+        "executionId": "90625186-f4ab-4705-926e-4ad83c454d80",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346537503
+      }
+    ],
+    "8.6: Return deterministic EARS-format fallback template on timeout or error": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366574
+      },
+      {
+        "executionId": "90625186-f4ab-4705-926e-4ad83c454d80",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795346543998
+      }
+    ],
+    "9.1: Build SummonLoader cycling through atmospheric progress messages": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366678
+      }
+    ],
+    "9.2: Build ErrorCard with gothic-themed message per error type (not found, private, rate limited)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366802
+      }
+    ],
+    "9.3: Show all three demo crypt cards on error screen with one-click navigation": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366889
+      }
+    ],
+    "10.1: Check fixtures by owner/repo and render CryptMap immediately with zero API calls for demo repos": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345366983
+      }
+    ],
+    "10.2: Show SummonLoader while GET /api/analyze runs for live repos": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367082
+      }
+    ],
+    "10.3: Pass CryptData to CryptMap and HUD": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367183
+      }
+    ],
+    "10.4: Wire node click to open InspectorDrawer with correct node data": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367284
+      }
+    ],
+    "10.5: Render ErrorCard on API error (404, 403, timeout)": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367375
+      }
+    ],
+    "10.6: Set page title to owner/repo — Codebase Crypt": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367493
+      }
+    ],
+    "10.7: Add canonical link for shareable URL": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367583
+      }
+    ],
+    "11.1: Run npm test and confirm 100% pass for unit and property-based tests": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367672
+      }
+    ],
+    "11.2: Verify all three demo crypts load in under 500ms": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367763
+      }
+    ],
+    "11.3: Verify live repo analysis of expressjs/express completes in under 10s": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367854
+      }
+    ],
+    "11.4: Verify Exorcise spec generates in under 8s with file-specific content": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345367953
+      }
+    ],
+    "11.5: Verify WCAG AA contrast on landing page and Inspector Drawer": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345368052
+      }
+    ],
+    "11.6: Verify shareable URL for /crypt/expressjs/express works for a cold visitor": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345368151
+      }
+    ],
+    "11.7: Confirm .kiro/ is tracked in Git and not in .gitignore": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345368252
+      }
+    ],
+    "11.8: Confirm .env.example documents GITHUB_TOKEN and GEMINI_API_KEY": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345368353
+      }
+    ],
+    "11.9: Confirm Vercel deployment URL is live and all three demo flows work end-to-end": [
+      {
+        "executionId": "e8dafd50-4892-449d-8d1f-4766cd7b9d97",
+        "chatSessionId": "sess_b775ec0d-d3b0-4611-9651-255a214ea07a",
+        "timestamp": 1795345368452
       }
     ]
   }
