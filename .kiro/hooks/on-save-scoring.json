@@ -1,0 +1,15 @@
+{
+  "hooks": [
+    {
+      "name": "Run tests on scoring.ts save",
+      "event": "file:save",
+      "filters": {
+        "path": "src/lib/scoring.ts"
+      },
+      "action": {
+        "type": "command",
+        "command": "npm test"
+      }
+    }
+  ]
+}
