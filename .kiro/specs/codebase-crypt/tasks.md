@@ -6,8 +6,8 @@ Set up the Next.js App Router project (latest, v16+) with TypeScript, Tailwind C
 
 ### Sub-tasks
 
-- [-] 1.1 Scaffold Next.js: run `npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --no-git` with defaults
-- [~] 1.2 Install runtime deps: `npm install @xyflow/react ai @ai-sdk/google jszip zod`
+- [x] 1.1 Scaffold Next.js: run `npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --no-git` with defaults
+- [-] 1.2 Install runtime deps: `npm install @xyflow/react ai @ai-sdk/google jszip zod`
 - [~] 1.3 Install dev deps: `npm install -D vitest @vitest/coverage-v8 fast-check @vitejs/plugin-react`
 - [~] 1.4 Create `vitest.config.ts` at root (separate from next.config.ts); add `"test": "vitest"` to package.json scripts
 - [~] 1.5 Write `src/types/index.ts` — exports `FileMetrics`, `CryptNode`, `CryptData`, `HauntingType`, `HauntingGrade`
